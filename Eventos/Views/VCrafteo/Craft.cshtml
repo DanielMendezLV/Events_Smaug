@@ -1,0 +1,222 @@
+﻿@{
+    ViewBag.Title = "Craft";
+    Layout = "~/Views/Shared/_LayoutEventos.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/craft")
+}
+
+
+<h2>Secciones</h2>
+
+
+
+<div class="row">
+
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Agregar Seccion</h4>
+                <hr />
+            </span>
+            <div class="row">
+
+                <form class="col s12" id="form-agregar-eventos">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="input-field col s12">
+
+                                <label class="col-sm-2 control-label">Selecciona el Evento</label>
+                                <br />
+                                <ul data-bind="foreach: listaEventos">
+                                    <a href="#"><li class="collection-item waves-effect" data-bind="text: Nombre, click: $parent.getEventoSelecto"></li></a>
+                                    <br />
+                                </ul>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-content-add-circle-outline prefix"></i>
+                                    <input id="icon_prefix4" type="number" min="0" max="9" class="form-control" pattern="[1-9]{1}" id="inputDireccion" data-bind=" valueUpdate:'afterkeydown',value:numeroSecciones, event: { 'keyup': crearSecciones }" />
+
+
+                                    <label for="icon_prefix4">No Secciones</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col s6">
+        <a name="editarLugar"></a>
+        <div class="card-panel ">
+            <span class="blue-grey-text">
+                <h4>Creacion</h4>
+                <hr />
+            </span>
+            <div class="row">
+                <form class="form-horizontal" id="form">
+                    <div data-bind="foreach: noBox">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="mdi-social-domain prefix"></i>
+                                <input id="icon_prefix3" type="text" class="form-control" id="in" data-bind="value:Nombre"><br />
+
+
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-default" data-bind="click: $parent.getConfigurar">Configurar</button>
+
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-default" data-bind="click: ingresarSecciones">Enviar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ko if:toConfig() -->
+    <div class="col s6">
+        <a name="editarLugar"></a>
+        <div class="card-panel ">
+            <span class="blue-grey-text">
+                <h4>Editar Lugar</h4>
+                <hr />
+            </span>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="mdi-action-label prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind="value:toConfig().NoAsientos" class="validate ">
+                    <label for="icon_prefix4">No. sAsientos</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label-outline prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind="value:toConfig().Precio" class="validate ">
+                    <label for="icon_prefix4">Precio</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label prefix"></i>
+                    <input id="icon_prefix3" type="text" data-bind="value:toConfig().Numeracion" class="validate ">
+                    <label for="icon_prefix4">Numeracion</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label-outline prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind=" valueUpdate:'afterkeydown', value:toConfig().Fila, event: { 'keyup': calcular }" class="validate ">
+                    <label for="icon_prefix4">Fila</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind="text:toConfig().Columna,value:toConfig().Columna" class="validate ">
+                    <label for="icon_prefix4">Columna</label>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+
+
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Ver </h4>
+                <hr />
+            </span>
+            <div class="row">
+
+                <form class="col s12" id="form-agregar-eventos">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="input-field col s12">
+
+                                <label class="col-sm-2 control-label">Selecciona el Evento</label>
+                                <br />
+                                <ul data-bind="foreach: listaEventos">
+                                    <a href="#"><li class="collection-item waves-effect" data-bind="text: Nombre,  click: $parent.getEventoForDetail"></li></a>
+                                    <br />
+                                </ul>
+                            </div>
+
+                            <ul class="list-unstyled" data-bind="foreach: listaDetalleSeccion">
+                                <li class="collection-item waves-orange">
+                                    &nbsp;&nbsp;<span>Nombre: </span><span data-bind="text:Nombre"></span>
+
+                                    <small><a href="#" data-bind="click: $parent.getSeccionDetail">Detalles</a></small>
+                                    <small><a href="#" data-bind="click: $parent.getSeccionDelete">Eliminar</a></small>
+
+                                </li>
+
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ko if:detail() -->
+
+    <div class="col s6">
+        <a name="editarLugar"></a>
+        <div class="card-panel ">
+            <span class="blue-grey-text">
+                <h4>Detalle</h4>
+                <hr />
+            </span>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="mdi-action-label prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind="value:detail().NoAsientos" class="validate ">
+                    <label for="icon_prefix4">No. sAsientos</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label-outline prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind="value:detail().Precio" class="validate ">
+                    <label for="icon_prefix4">Precio</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label prefix"></i>
+                    <input id="icon_prefix3" type="text" data-bind="value:detail().Numeracion" class="validate ">
+                    <label for="icon_prefix4">Numeracion</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label-outline prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind="value:detail().Fila" class="validate ">
+                    <label for="icon_prefix4">Fila</label>
+
+                </div>
+                <div class="input-field col s12">
+                    <i class="mdi-action-label prefix"></i>
+                    <input id="icon_prefix3" type="number" data-bind="value:detail().Columna" class="validate ">
+                    <label for="icon_prefix4">Columna</label>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- /ko -->
+
+</div>
+

@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "Eventos";
+    Layout = "~/Views/Shared/_LayoutEventos.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/eventos")
+}
+
+
+<h2>Eventos</h2>
+
+<div class="col s12 m7" data-bind="foreach: listaEventos">
+    <div class="card">
+        <div class="card-image">
+            <img class="img-responsive" data-bind="attr:{src: '../Imagenes/' + Foto}" title="imagen" /><br />
+
+        </div>
+        <div class="card-content">
+            <h6>Evento:</h6>
+            <p data-bind="text:Nombre">
+
+            </p>
+            <h6>Fecha:</h6>
+            <p data-bind="text:Fecha">
+            </p>
+
+
+        </div>
+        <div class="card-action">
+            <span class="white-text" style="background: whitesmoke; padding: 0.5rem;">
+                <small><a href="#" data-bind="click: $parent.getEventoDetail">Detalles</a></small>
+                <small><a href="#" data-bind="click: $parent.getEventoDelete">Eliminar</a></small>
+                <small><a href="#" data-bind="click: $parent.getEventoEditar">Editar</a></small>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ko if:detail() -->
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Detalles</h2>
+        </div>
+        <table class="table">
+            <tr><td>Nombre</td><td data-bind="text: detail().Nombre"></td></tr>
+            <tr><td>Fecha</td><td data-bind="text: detail().Fecha"></td></tr>
+            <tr><td>No. Entradas</td><td data-bind="text: detail().EntradasDisponibles"></td></tr>
+            <tr><td>Direccion</td><td data-bind="text: detail().Foto"></td></tr>
+            <tr><td>Lugar</td><td data-bind="text: detailLugar().Nombre"></td></tr>
+            <tr><td>Tipo Evento</td><td data-bind="text: detailTipo().Nombre"></td></tr>
+
+        </table>
+    </div>
+</div>
+<!-- /ko -->
+
+
+
+
+<div class="col-md-5">
+    <div class="panel panel-default">
+        <h2>Agregar</h2>
+
+        <div class="panel-body">
+            <form class="form-horizontal" data-bind="submit: addEvento" id="form-agregar-eventos">
+
+                <div class="form-group frspace" data-bind="with: newEvento">
+
+                    <label for="inputnombre" class="col-sm-2 control-label">Nombre</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" step="any" class="form-control" id="inputnombre" data-bind="value:Nombre" required />
+                    </div>
+
+
+
+                    <label for="inputDireccion" class="col-sm-2 control-label">NoEntradas</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="inputDireccion" data-bind="value:EntradasDisponibles" required />
+                    </div>
+
+                    <label for="inputDireccion" class="col-sm-2 control-label">Foto</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="input-sm" id="inputFile" data-bind="value: Foto" />
+                    </div>
+
+                    <label for="inputDireccion" class="col-sm-2 control-label">Fecha</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="inputDireccion" data-bind="value:Fecha" required />
+                    </div>
+                </div>
+
+                <label for="inputCategoriaId" class="col-sm-2 control-label">Tipos</label>
+                <div class="form-group" data-bind="foreach: listaTipos">
+
+                    <a class="waves-effect waves-light btn" data-bind="text: Nombre, click: $parent.sendTipo"><i class="mdi-file-cloud left"></i>button</a>
+
+
+                </div>
+                <br />
+                <!-- ko if:xTipo() -->
+                <a class="btn-floating btn-large waves-effect waves-light red" data-bind="click: pressXTipo"><i class="mdi-content-remove"></i></a>
+                <!-- /ko -->
+
+                <br />
+                <label for="inputCategoriaId" class="col-sm-2 control-label">Lugar</label>
+                <div class="form-group" data-bind="foreach: listaLugares">
+                    @*<input class="with-gap" name="group1" type="radio" id="test3" />*@
+                    <a class="waves-effect waves-light btn actives" data-bind="text: Nombre, click: $parent.sendLugar"><i class="mdi-file-cloud left"></i>button</a>
+
+                </div>
+                <!-- ko if:xLugar() -->
+                <br />
+                <a class="btn-floating btn-large waves-effect waves-light red" data-bind="click: pressXLugar"><i class="mdi-content-remove"></i></a>
+                <!-- /ko -->
+
+                <br />
+                <br />
+                <button type="submit" class="btn btn-default">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- ko if:edit()-->
+
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Editar Evento</h2>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal" data-bind="submit: editEvento">
+                <div class="form-group frspace">
+
+                    <label for="inputnombre" class="col-sm-2 control-label">Nombre</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" step="any" class="form-control" id="inputnombre" data-bind="textinput:edit().Nombre" />
+                    </div>
+
+
+
+                    <label for="inputDireccion" class="col-sm-2 control-label">NoEntradas</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="inputDireccion" data-bind="textinput:edit().EntradasDisponibles" />
+                    </div>
+
+
+                    <label for="inputDireccion" class="col-sm-2 control-label">Foto</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="inputFileEdit" data-bind="value: editEventoFoto" />
+                    </div>
+
+
+
+                    <label for="inputDireccion" class="col-sm-2 control-label">Fecha</label>
+                    <div class="col-sm-10">
+                        <input disabled="disabled" type="text" class="form-control" id="inputDireccion" data-bind="textinput:edit().Fecha" />
+                    </div>
+
+
+                    <label for="inputDireccion" class="col-sm-2 control-label">Nueva Fecha</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="inputDireccion" data-bind="value:edit().Fecha" />
+                    </div>
+
+
+                </div>
+
+
+                <label for="inputCategoriaId" class="col-sm-2 control-label">Tipos</label>
+                <div class="form-group" data-bind="foreach: listaTiposEdit">
+
+                    <a class="waves-effect waves-light btn" data-bind="text: Nombre, click: $parent.sendTipoEdit"><i class="mdi-file-cloud left"></i>button</a>
+
+
+                </div>
+                <br />
+                <!-- ko if:xTipoEdit() -->
+                <a class="btn-floating btn-large waves-effect waves-light red" data-bind="click: pressXTipoEdit"><i class="mdi-content-remove"></i></a>
+                <!-- /ko -->
+
+                <br />
+                <label for="inputCategoriaId" class="col-sm-2 control-label">Lugar</label>
+                <div class="form-group" data-bind="foreach: listaLugaresEdit">
+                    @*<input class="with-gap" name="group1" type="radio" id="test3" />*@
+                    <a class="waves-effect waves-light btn actives" data-bind="text: Nombre, click: $parent.sendLugarEdit"><i class="mdi-file-cloud left"></i>button</a>
+
+                </div>
+                <!-- ko if:xLugarEdit() -->
+                <br />
+                <a class="btn-floating btn-large waves-effect waves-light red" data-bind="click: pressXLugarEdit"><i class="mdi-content-remove"></i></a>
+                <!-- /ko -->
+
+                <br />
+                <br />
+
+
+                <button type="submit" class="btn btn-default">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- /ko -->
+

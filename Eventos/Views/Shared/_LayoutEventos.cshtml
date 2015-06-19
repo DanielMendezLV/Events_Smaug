@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="up cyan darken-4">
+    </div>
+    <a href="#" data-activates="slide-out" id="move" class="button-collapse"><i class="small mdi-navigation-menu"></i></a>
+    <div class="container">
+        <div class="row">
+            <div>
+                <ul id="slide-out" class="side-nav collapsible" >
+                    <div>
+   
+                        <img class="responsive-img" src="/Image/Logo.jpg" />
+
+                        <hr  />
+                    </div>
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <!-- ko if: usuarioLogeado() -->
+                        <li>
+                            <div class="collapsible-header waves-effect waves-red" data-bind="text: usuarioLogeado().Nickname"></div>
+                            <div class="collapsible-body" style="display: block;">
+                                <ul>
+                                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                                    <li>
+                                        <a href="#" data-bind="click: CerrarSesion">Log Out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- /ko -->
+                        <li>
+                            <div class="collapsible-header waves-effect waves-red">Views</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                                    <li>@Html.ActionLink("Login", "Login", "Login", new { area = "" }, null)</li>
+                                    <!-- ko if: usuarioLogeado() -->
+                                    <!-- ko if: usuarioLogeado().RolId == 1 -->
+                                        <li>@Html.ActionLink("Crafteo", "Craft", "VCrafteo", new { area = "" }, null)</li>
+                                        <li>@Html.ActionLink("Lugars", "Lugares", "VLugars", new { area = "" }, null)</li>
+                                        <li>@Html.ActionLink("Tipos", "Tipos", "VTipos", new { area = "" }, null)</li>
+                                    <!-- /ko --> 
+                                    <li>@Html.ActionLink("Facturas", "VFactura", "VFacturas", new { area = "" }, null)</li>
+                                    <li>@Html.ActionLink("Ventas", "Ventas", "VVentas", new { area = "" }, null)</li>
+                                    <!-- /ko -->
+                                </ul>
+                            </div>
+                        </li>
+                    </ul> 
+                </ul>
+            </div>
+            <div class="col s12 m12 l12">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/materialize")
+        @Scripts.Render("~/bundles/JSEvento")
+    @section scripts {
+        @Scripts.Render("~/bundles/login")
+    }
+    @RenderSection("scripts", required: false)
+</body>
+</html>

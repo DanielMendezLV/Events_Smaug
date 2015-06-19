@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutEventos.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/login")
+}
+
+
+<h2>User</h2>
+    <!-- ko if:!usuarioLogeado() -->
+<div class="row">
+    <div class="col s10 offset-s1">
+        <div class="card medium">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="/Image/mountain.png">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Login <i class="mdi-navigation-more-vert right"></i></span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Logear <i class="mdi-navigation-close right"></i></span>
+                <hr />
+                <div class="row">
+                    <form class="col s12" data-bind="submit: Logear">
+                        <div data-bind="with: usuarioLogear">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-action-account-circle prefix"></i>
+                                    <input id="icon_prefix" type="text" data-bind="value: NickName" required class="validate">
+                                    <label for="icon_prefix">Usuario</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-communication-vpn-key prefix"></i>
+                                    <input id="icon_prefix2" type="password" data-bind="value: Password" required class="validate">
+                                    <label for="icon_prefix2">Password</label>
+                                </div>
+                            </div>
+                            <button class="waves-effect waves-teal btn-flat" type="submit">
+                                Logear
+                                <i class="mdi-content-send right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<div class="row">
+    <div class="col s10 offset-s1">
+        <div class="card medium">
+            <div class="card-image waves-effect waves-block waves-red ">
+                <img class="activator" src="/Image/move.png">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Register <i class="mdi-navigation-more-vert right"></i></span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Register <i class="mdi-navigation-close right"></i></span>
+                <hr />
+                <div class="row">
+                    <form class="col s12" id="form-agregar-usuarios" data-bind="submit: addUsuario">
+                        <div class="form-group" data-bind="with: nuevoUsuario">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-action-face-unlock prefix"></i>
+                                    <input id="icon_prefix3" type="text" class="validate" data-bind="value: Nombre">
+                                    <label for="icon_prefix3">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-av-timer prefix"></i>
+                                    <input id="icon_prefix4" type="text" class="validate" data-bind="value: Apellido">
+                                    <label for="icon_prefix4">Apellido</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-action-account-box prefix"></i>
+                                    <input id="icon_prefix5" type="text" class="validate" data-bind="value: Nickname">
+                                    <label for="icon_prefix5">NickName</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-action-lock-outline prefix"></i>
+                                    <input id="icon_prefix6" type="password" class="validate" data-bind="value: Password">
+                                    <label for="icon_prefix6">Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-action-track-changes prefix"></i>
+                                    <input id="icon_prefix7" type="text" class="validate" data-bind="value: Direccion">
+                                    <label for="icon_prefix7">Direccion</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-communication-email prefix"></i>
+                                    <input id="icon_prefix8" type="email" class="validate" data-bind="value: Correo">
+                                    <label for="icon_prefix8">Correo</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="mdi-communication-call prefix"></i>
+                                    <input id="icon_prefix9" type="tel" class="validate" data-bind="value: Telefono">
+                                    <label for="icon_prefix9">Telefono</label>
+                                </div>
+                            </div>
+                            <button class="waves-effect waves-teal btn-flat" type="submit">
+                                Agregar Usuario
+                                <i class="mdi-content-send right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ko if: usuarioLogeado() -->
+    <!-- ko if: usuarioLogeado().RolId == 1 -->
+    <div class="row" data-bind="foreach: listaUsuarios">
+        <div class="col s6">
+            <div class="medium card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="/Image/mountain.png" style="cursor: pointer">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4" data-bind="text: Nickname"></span>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4" data-bind="text: Nickname"><i class="mdi-navigation-close right"></i></span>
+                    <hr />
+                    <b><h5>Detalle: </h5></b>
+                    <hr />
+                    <b>Nombre: <span data-bind="text: Nombre"></span></b>
+                    <br />
+                    <b>Apellido: <span data-bind="text: Apellido"></span></b>
+                    <br />
+                    <b>Telefono: <span data-bind="text: Telefono"></span></b>
+                    <br />
+                    <b>Correo: <span data-bind="text: Correo"></span></b>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- /ko -->
+<!-- /ko -->

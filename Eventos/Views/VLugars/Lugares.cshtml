@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Lugares";
+    Layout = "~/Views/Shared/_LayoutEventos.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/lugares")
+}
+
+<h2>Lugares<i data-bind="click: abrirAgregar" class="medium mdi-content-add-circle"></i></h2>
+
+
+<div class="row">
+    <!-- ko if:abrirNuevo() -->
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Agregar Lugar</h4>
+                <hr />
+            </span>
+            <div class="row">
+                <form id="form-agregar-lugares" class="col s12" data-bind="submit: addLugar">
+                    <div class="form-group" data-bind="with: newLugar">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="mdi-social-domain prefix"></i>
+                                <input id="icon_prefix3" type="text" data-bind="value:Nombre" required class="validate">
+                                <label for="icon_prefix3">Nombre</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="mdi-maps-pin-drop prefix"></i>
+                                <input id="icon_prefix4" type="text" data-bind="value:Direccion" required class="validate">
+                                <label for="icon_prefix4">Direccion</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="mdi-content-content-paste prefix"></i>
+                                <input id="icon_prefix5" type="number" step="any" min="0" required data-bind="value:NoEntradas" class="validate">
+                                <label for="icon_prefix5">Numero de Entradas</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="mdi-editor-attach-file prefix"></i>
+                                <input id="inputFile" type="file" required data-bind="value:Foto" class="validate">
+                            </div>
+                        </div>
+                        <button class="waves-effect waves-teal btn-flat" type="submit">
+                            Agregar Lugar
+                            <i class="mdi-content-send right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if:edit()-->
+    <div class="col s6">
+        <a name="editarLugar"></a>
+        <div class="card-panel ">
+            <span class="blue-grey-text">
+                <h4>Editar Lugar</h4>
+                <hr />
+            </span>
+            <div class="row">
+                <form id="form-agregar-lugares" class="col s12" data-bind="submit: editarLugar">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="mdi-social-domain prefix"></i>
+                            <input id="icon_prefix3" type="text" data-bind="textinput:edit().Nombre"  class="validate ">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="mdi-maps-pin-drop prefix"></i>
+                            <input id="icon_prefix4" type="text" data-bind="textinput:edit().Direccion"  class="validate ">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="mdi-content-content-paste prefix"></i>
+                            <input id="icon_prefix5" type="number" step="any" min="0"  data-bind="textinput:edit().NoEntradas" class="validate ">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="mdi-editor-attach-file prefix"></i>
+                            <input id="inputFileEdit" type="file"  data-bind="value: editLugarFoto" class="validate ">
+                        </div>
+                    </div>
+                    <button class="waves-effect waves-teal btn-flat" type="submit">
+                        Agregar Lugar
+                        <i class="mdi-content-send right"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <div class="row" data-bind="foreach: listaLugares">
+        <div class="col s6">
+            <div class="medium card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" data-bind="attr:{src: '../Imagenes/' + Foto}" title="imagen" style="cursor: pointer">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4" data-bind="text: Nombre"></span>
+                    <br />
+                    <b>Direccion: <span data-bind="text: Direccion"> </span></b>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4" data-bind="text: Nombre"><i class="mdi-navigation-close right"></i></span>
+                    <hr />
+                    <b><h5>Detalles: </h5></b>
+                    <b>Direccion: <span data-bind="text: Direccion"></span></b>
+                    <hr />
+                    <b>Numero de entradas : <span data-bind="text: NoEntradas"></span></b>
+                    <hr />
+                    <a href="#" data-bind="click: $parent.getLugarDelete">
+                        <i class="medium mdi-action-delete"></i>  <h6>Delete</h6>
+                    </a>
+                    <hr />
+                    <a href="#" data-bind="click: $parent.getLugarEditar">
+                        <i class="medium mdi-action-system-update-tv"></i> <h6>Update</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+

@@ -1,0 +1,189 @@
+﻿@{
+    ViewBag.Title = "Venta";
+    Layout = "~/Views/Shared/_LayoutEventos.cshtml";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/ventas")
+}
+
+<hr />
+
+<div class="row">
+    <!-- ko if:Factura-->
+
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h2 class="panel-title">Factura  #<span data-bind="text: Factura"></span></h2>
+            </span>
+            <div class="row">
+
+                <form class="col s12" id="form-agregar-eventos">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <table class="list-unstyled" data-bind="foreach: ListaFactura">
+                                    <tr>
+                                        <th>
+                                            <strong><span data-bind="text: Asiento"></span>:<span data-bind="text: Seccion"></span></strong>
+                                        </th>
+                                        <th>
+                                            <strong><span data-bind="text: Evento"></span>:<span data-bind="text: Fecha"></span></strong>
+                                        </th>
+                                        <th>
+                                            <strong><span data-bind="text: Precio"></span></strong>
+                                        </th>
+                                    </tr>
+                                </table>
+                                <hr />
+                                <h1><span data-bind="text: Total"></span></h1>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <!--  /ko  -->
+    <!-- ko if:CarrEntradas-->
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Carrito</h4>
+                <hr />
+            </span>
+            <div class="row">
+
+                <form class="col s12" id="form-agregar-eventos">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="input-field col s12">
+
+
+                                <ul class="list-unstyled" data-bind="foreach: CarrEntradas">
+                                    <li>
+                                        <strong><span data-bind="text: Asiento"></span> : <span data-bind="text: Seccion"></span> : </strong>
+                                        <strong><span data-bind="text: Evento"></span> : <span data-bind="text: Fecha"></span> : </strong>
+                                        <strong><span data-bind="text: Precio"></span></strong>
+                                        <a style="color:blue" href="#" data-bind="click: $parent.Remove">X</a>
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled" data-bind="foreach: ayuda">
+                                    <li>
+                                        <a style="color:blue" href="#" data-bind="click: $parent.Comprar">Buy</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- /ko-->
+    <!-- ko if:Evento() -->
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Evento</h4>
+                <hr />
+            </span>
+            <div class="row">
+
+                <form class="col s12" id="form-agregar-eventos">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <ul class="list-unstyled" data-bind="foreach: ListaEventos">
+                                    <li>
+                                        <strong><span data-bind="text: Nombre"></span>:<span data-bind="text: IdEvento"></span></strong>
+                                        <small><a style="color:blue" href="#" data-bind="click: $parent.getSeccion">Ver Secciones</a></small>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if:Seccion()-->
+
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Seccion</h4>
+                <hr />
+            </span>
+            <div class="row">
+
+                <form class="col s12" id="form-agregar-eventos">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="panel-heading">
+                                    <h2 class="panel-title" data-bind="text: Seccion"></h2><p class="list-unstyled" data-bind="foreach: ayuda"><a style="color:blue" href="#" data-bind="click: $parent.RegresarEvento">Eventos</a></p>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-unstyled" data-bind="foreach: ListaSecciones">
+                                        <li>
+                                            <strong><span data-bind="text: Nombre"></span></strong>
+                                            <small><a style="color:blue" href="#" data-bind="click: $parent.getAsiento">Ver Asientos</a></small>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /ko -->
+    <!-- ko if:Asiento()-->
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Asiento</h4>
+                <p class="list-unstyled" data-bind="foreach: ayuda"><a style="color:blue" href="#" data-bind="click: $parent.RegresarSeccion">Secciones</a></p>
+                <p class="list-unstyled" data-bind="foreach: ayuda"><a style="color:blue" href="#" data-bind="click: $parent.RegresarEvento">Eventos</a></p>
+            </span>
+            <div class="row">
+
+                <form class="col s12" id="form-agregar-eventos">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <ul class="list-unstyled" data-bind="foreach: listaAsientos">
+                                    <li>
+                                        <strong><span data-bind="text: Numero"></span></strong>
+                                        <strong><span data-bind="text: Bool"></span></strong>
+                                        <strong><span data-bind="text: Precio"></span></strong>
+                                        <small><a style="color:blue" href="#" data-bind="click: $parent.getEntrada">Agregar al carrito</a></small>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- /ko -->
+</div>

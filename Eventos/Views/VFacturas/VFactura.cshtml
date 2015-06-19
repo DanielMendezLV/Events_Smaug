@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "VFactura";
+    Layout = "~/Views/Shared/_LayoutEventos.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/facturas")
+}
+
+<script type="text/javascript" src="~/Scripts/jspdf.debug.js"></script>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Facturas</h2>
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled" data-bind="foreach: ListaFactura">
+                    <li>
+                        <strong>Factura #<span data-bind="text: IdFactura"></span> : Total:<span data-bind="text: Total"></span> : </strong>
+                        <a data-toggle="modal" data-target="#modalDetalle" data-bind="click: $parent.Detalle">Detalle</a>
+
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="alert alert-danger" data-bind="visible: error"><p data-bind="text: error"></p></div>
+    </div>
+    <h2>Factura</h2>
+
+    <!-- ko if:Det() -->
+    <div class="col-md-5">
+
+        <div id="customers">
+            <table id="tab_customers" class="table table-striped">
+                <thead>
+                    <tr class='warning'>
+
+                        <th>
+                            Factura
+                        </th>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p data-bind="text: Det().IdFactura"></p>
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: ListaEntrada">
+                    <tr>
+                        <td></td>
+
+                        <td>
+                            <p data-bind="text: Fecha"></p>
+                        </td>
+                        <td>
+                            <p data-bind="text: Precio"></p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>Total </td>
+                        <td><span data-bind="text: Det().Total"></span></td>
+
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <button onclick="javascript:demoFromHTML();">PDF</button>
+
+    </div>
+
+    <!-- /ko -->
+</div>
+<script>
+
+    function demoFromHTML() {
+        var pdf = new jsPDF('p', 'pt', 'letter');
+        // source can be HTML-formatted string, or a reference
+        // to an actual DOM element from which the text will be scraped.
+        source = $('#customers')[0];
+        // we support special element handlers. Register them with jQuery-style
+        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+        // There is no support for any other type of selectors
+        // (class, of compound) at this time.
+        specialElementHandlers = {
+            // element with id of "bypass" - jQuery style selector
+            '#bypassme': function (element, renderer) {
+                // true = "handled elsewhere, bypass text extraction"
+                return true
+            }
+        };
+        margins = {
+            top: 80,
+            bottom: 60,
+            left: 40,
+            width: 522
+        };
+        // all coords and widths are in jsPDF instance's declared units
+        // 'inches' in this case
+        pdf.fromHTML(
+        source, // HTML string or DOM elem ref.
+        margins.left, // x coord
+
+        margins.top, { // y coord
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
+        function (dispose) {
+            // dispose: object with X, Y of the last line add to the PDF
+            //          this allow the insertion of new lines after html
+            pdf.save('Factura.pdf');
+        }, margins);
+    }
+</script>

@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Tipos";
+    Layout = "~/Views/Shared/_LayoutEventos.cshtml";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/tipos")
+}
+
+
+<h2>Tipos <i data-bind="click: abrirAgregar" class="medium mdi-content-add-circle"></i></h2>
+
+<div class="row">
+    <!-- ko if:abrirNuevo() -->
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Agregar Lugar</h4>
+                <hr />
+            </span>
+            <div class="row">
+                <form id="form-agregar-tipos" class="col s12" data-bind="submit: addTipo">
+                    <div class="form-group" data-bind="with: newTipo">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="mdi-maps-my-location prefix"></i>
+                                <input id="icon_prefix3" type="text" data-bind="value:Nombre" required class="validate">
+                                <label for="icon_prefix3">Nombre</label>
+                            </div>
+                        </div>
+                        <button class="waves-effect waves-teal btn-flat" type="submit">
+                            Agregar Tipo
+                            <i class="mdi-content-send right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if:edit() -->
+    <div class="col s6">
+        <div class="  card-panel  ">
+            <span class="blue-grey-text">
+                <h4>Agregar Lugar</h4>
+                <hr />
+            </span>
+            <div class="row">
+                <form id="form-agregar-tipos" class="col s12" data-bind="submit: editarTipo">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="mdi-maps-my-location prefix"></i>
+                            <input id="icon_prefix3" placeholder="Nombre" type="text" data-bind="value:edit().Nombre"  class="validate"> 
+                        </div>
+                    </div>
+                    <button class="waves-effect waves-teal btn-flat" type="submit">
+                        Editar Tipo
+                        <i class="mdi-content-send right"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- /ko -->
+    
+    <div class="row" data-bind="foreach: listaTipos">
+        <div class="col s6">
+            <div class="medium card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="/Image/TiposEvento.jpg" data-caption="Tipos de Evento" title="Tipos de Evento" style="cursor: pointer">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4" data-bind="text: Nombre"></span>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4" data-bind="text: Nombre"><i class="mdi-navigation-close right"></i></span>
+                    <hr />
+                    <b><h5>Opciones: </h5></b>
+                    <hr />
+                    <a href="#" data-bind="click: $parent.getTipoDelete">
+                        <i class="medium mdi-action-delete"></i>  <h6>Delete</h6>
+                    </a>
+                    <hr />
+                    <a href="#" data-bind="click: $parent.getTipoEditar">
+                        <i class="medium mdi-action-system-update-tv"></i> <h6>Update</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
